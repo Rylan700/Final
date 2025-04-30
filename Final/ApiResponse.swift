@@ -5,15 +5,18 @@
 //  Created by WADE, RYLAN on 4/28/25.
 //
 
-struct ApiResponse :Codable {
-    let weather: WeatherMain
+struct WeatherResponse: Codable {
+    let name: String
+    let main: Main
+    let weather: [Weather]
 }
 
-struct WeatherMain :Codable {
-    let temp: String
-    let feels_like: String
-    let temp_min: String
-    let temp_max: String
-    let humidity: String
+struct Main: Codable {
+    let temp: Double
+    let temp_min: Double
+    let temp_max: Double
 }
 
+struct Weather: Codable {
+    let description: String
+}

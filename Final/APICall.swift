@@ -7,7 +7,7 @@
 
 import Foundation
 
-class APICall {
+class APICall : ObservableObject{
     @Published var cityName: String = ""
     @Published var citytemp: String = ""
     @Published var cityweather: String = ""
@@ -16,27 +16,28 @@ class APICall {
 
     func getWeather() {
         guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=Springfield&units=imperial&appid=745e5645454545454545454545454545") else {
-            print( "Invalid URL")
+            print("Invalid URL")
             return
         }
-        
-        URLSession.shared.dataTask(with: url) { data, response, error in if let data = data {
-            do {
-                let decodedResponse = try JSONDecoder().decode(DashboardView.self, from: data)
-                
-                DispatchQueue.main.async {
-                    self.cityName = decodedResponse.slip.cityName
-                    self.citytemp = decodedResponse.slip.citytemp
-                    self.cityweather = decodedResponse.slip.cityweather
-                    self.maxTemp = decodedResponse.slip.maxTemp
-                    self.minTemp = decodedResponse.slip.minTemp
+
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let data = data {
+                do {
+                    let decodedResponse = try JSONDecoder().decode(WeatherResponse.self, from: data)
+                    
+                    DispatchQueue.main.async {
+                        self.cityName = decodedResponse.name
+                        self.citytemp = String(format: "%.1f", decodedResponse.main.temp)
+                        self.cityweather = decodedResponse.weather.first?.description.capitalized ?? "N/A"
+                        self.maxTemp = String(format: "%.1f", decodedResponse.main.temp_max)
+                        self.minTemp = String(format: "%.1f", decodedResponse.main.temp_min)
+                    }
+                } catch {
+                    print("Decoding Error: \(error)")
                 }
-            } catch{
-                print("Decoding Error: \(error)")
+            } else if let error = error {
+                print("HTTP Request Failed: \(error)")
             }
-        }else if let error = error {
-            print("Http Request Failed: \(error)")
-        }
-        }.resume( )
+        }.resume()
     }
 }
