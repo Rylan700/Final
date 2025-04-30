@@ -32,10 +32,20 @@ struct DashboardView: View {
                 .background(Color(red: 32 / 255, green: 142 / 255, blue: 220 / 255))
                 .cornerRadius(15)
                 
-
+                VStack {
+                    Text(viewModel.cityName).font(.title2).bold()
+                    Text("Temp: \(viewModel.citytemp)°F")
+                    Text("Condition: \(viewModel.cityweather)")
+                    Text("Max: \(viewModel.maxTemp)°F")
+                    Text("Min: \(viewModel.minTemp)°F")
+                }
+                
                     Button("Get Weather"){
                         viewModel.getWeather(selectedCity: cityName)
                     }
+            }
+            .onAppear {
+                viewModel.getWeather(selectedCity: cityName)
             }
         }
     }
