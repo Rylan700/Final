@@ -8,12 +8,10 @@
 import SwiftUI
 
 struct DashboardView: View {
+    @StateObject private var viewModel = APICall()
     @State private var cityName: String = "Springfield"
-    @State private var weatherResults: [WeatherResponse] = []
-    @State private var selectedWeather: WeatherResponse?
     @State private var favorites: [WeatherResponse] = []
-    @State private var icon: [WeatherResponse] = []
-
+    @State private var weatherResults: [WeatherResponse] = []
 
     var body: some View {
         ZStack {
@@ -34,12 +32,10 @@ struct DashboardView: View {
                 .background(Color(red: 32 / 255, green: 142 / 255, blue: 220 / 255))
                 .cornerRadius(15)
                 
-                Text(cityName)
-                HStack{
-                    Text(weatherResults)
-                    Image(systemName: icon)
-                }
-                
+
+                    Button("Get Weather"){
+                        viewModel.getWeather(selectedCity: cityName)
+                    }
             }
         }
     }

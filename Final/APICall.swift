@@ -14,8 +14,8 @@ class APICall : ObservableObject{
     @Published var maxTemp: String = ""
     @Published var minTemp: String = ""
 
-    func getWeather() {
-        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=Springfield&units=imperial&appid=745e5645454545454545454545454545") else {
+    func getWeather(selectedCity: String) {
+        guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=\(selectedCity)&units=imperial&appid=745e5645454545454545454545454545") else {
             print("Invalid URL")
             return
         }
