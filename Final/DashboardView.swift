@@ -9,9 +9,11 @@ import SwiftUI
 
 struct DashboardView: View {
     @State private var cityName: String = "Springfield"
-    @State private var temperature: String = "34°F"
-    @State private var weather: String = "Raining"
-    @State private var icon: String = "cloud.rain"
+    @State private var weatherResults: [WeatherResponse] = []
+    @State private var selectedWeather: WeatherResponse?
+    @State private var favorites: [WeatherResponse] = []
+    @State private var icon: [WeatherResponse] = []
+
 
     var body: some View {
         ZStack {
@@ -33,9 +35,8 @@ struct DashboardView: View {
                 .cornerRadius(15)
                 
                 Text(cityName)
-                Text(temperature)
                 HStack{
-                    Text(weather)
+                    Text(weatherResults)
                     Image(systemName: icon)
                 }
                 

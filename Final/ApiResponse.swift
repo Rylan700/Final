@@ -4,19 +4,21 @@
 //
 //  Created by WADE, RYLAN on 4/28/25.
 //
+import Foundation
 
 struct WeatherResponse: Codable {
     let name: String
-    let main: Main
     let weather: [Weather]
-}
+    let main: Main
 
-struct Main: Codable {
-    let temp: Double
-    let temp_min: Double
-    let temp_max: Double
-}
+    struct Weather: Codable {
+        let description: String
+    }
 
-struct Weather: Codable {
-    let description: String
+    struct Main: Codable {
+        let temp: Double
+        let humidity: Int
+        let temp_max: Double
+        let temp_min: Double
+    }
 }
