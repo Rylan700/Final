@@ -40,9 +40,17 @@ struct DashboardView: View {
                     Text("Min: \(viewModel.minTemp)°F")
                 }
                 
+                HStack{
                     Button("Get Weather"){
                         viewModel.getWeather(selectedCity: cityName)
                     }
+                    .frame(width: 100)
+                    .background(.red)
+                    
+                    Button("Add to Favorites"){
+                        
+                    }
+                }
             }
             .onAppear {
                 viewModel.getWeather(selectedCity: cityName)
