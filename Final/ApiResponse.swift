@@ -10,6 +10,7 @@ struct WeatherResponse: Codable {
     let name: String
     let weather: [Weather]
     let main: Main
+    let wind: Wind
 
     struct Weather: Codable {
         let description: String
@@ -21,5 +22,10 @@ struct WeatherResponse: Codable {
         let humidity: Int
         let temp_max: Double
         let temp_min: Double
+        let feels_like: Double
+    }
+    struct Wind: Codable {
+        let speed: Double
     }
 }
+

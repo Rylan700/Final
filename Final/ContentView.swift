@@ -2,23 +2,31 @@
 //  ContentView.swift
 //  Final
 //
-//  Created by WADE, RYLAN on 4/28/25.
+//  Created by PETERS, SEAN on 4/28/25.
 //
-
 import SwiftUI
 
 struct ContentView: View {
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        TabView {
+            DashboardView()
+                .tabItem {
+                    Label("Weather", systemImage: "cloud.circle.fill")
+                }
+
+            FavoritesView()
+                .tabItem {
+                    Label("Favorites", systemImage: "star")
+                }
+                .symbolRenderingMode(.palette)
         }
-        .padding()
     }
 }
 
-#Preview {
-    ContentView()
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
 }

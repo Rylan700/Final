@@ -13,6 +13,8 @@ class APICall : ObservableObject{
     @Published var cityweather: String = ""
     @Published var maxTemp: String = ""
     @Published var minTemp: String = ""
+    @Published var feelsLike: String = ""
+    @Published var speed: String = ""
 
     func getWeather(selectedCity: String) {
         guard let url = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=\(selectedCity)&units=imperial&appid=187665e4a93bc2b4bbae1ce5bc30434b") else {
@@ -31,6 +33,8 @@ class APICall : ObservableObject{
                         self.cityweather = decodedResponse.weather.first?.description.capitalized ?? "N/A"
                         self.maxTemp = String(format: "%.1f", decodedResponse.main.temp_max)
                         self.minTemp = String(format: "%.1f", decodedResponse.main.temp_min)
+                        self.feelsLike = String(format: "%.1f", decodedResponse.main.feels_like)
+                        self.speed = String(format: "%.1f", decodedResponse.wind.speed)
                     }
                 } catch {
                     print("Decoding Error: \(error)")
