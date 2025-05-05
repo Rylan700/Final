@@ -47,17 +47,37 @@ struct DashboardView: View {
                     .frame(width: 100)
                     .background(.red)
                     
-                    Button("Add to Favorites"){
-                        
+                    Button("Add to Favorites") {
+                        let weather = WeatherResponse(
+                            name: viewModel.cityName,
+                            weather: [WeatherResponse.Weather(description: viewModel.cityweather, icon: "")],
+                            main: WeatherResponse.Main(
+                                temp: Double(viewModel.citytemp) ?? 0.0,
+                                humidity: 0,
+                                temp_max: Double(viewModel.maxTemp) ?? 0.0,
+                                temp_min: Double(viewModel.minTemp) ?? 0.0
+                            )
+                        )
+
+                        favorites.append(weather)
+
+                        if let encoded = try? JSONEncoder().encode(favorites) {
+                            UserDefaults.standard.set(encoded, forKey: "favorites")
+                        }
                     }
                 }
             }
             .onAppear {
                 viewModel.getWeather(selectedCity: cityName)
+                if let data = UserDefaults.standard.data(forKey: "favorites"),
+                   let decoded = try? JSONDecoder().decode([WeatherResponse].self, from: data) {
+                    favorites = decoded
+                }
+            }
+
             }
         }
     }
-}
 
 struct DashboardView_Previews: PreviewProvider {
     static var previews: some View {
